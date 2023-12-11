@@ -3,7 +3,7 @@ services:
     build: .
     ports:
       - "7860:7860"
-    command: python3 launch.py --ui-config-file /opt/configs/ui-config.json --ui-settings-file /opt/configs/config.json --styles-file /opt/configs/styles.csv --autolaunch --listen --enable-insecure-extension-access --port 7860 --ckpt /opt/models/flatpiececore_a1400.safetensors --vae-path /opt/models/lastpieceVAE_contrast.safetensors
+    command: python3 launch.py --ui-config-file /opt/configs/ui-config.json --ui-settings-file /opt/configs/config.json --styles-file /opt/configs/styles.csv --autolaunch --listen --enable-insecure-extension-access --port 7860 --ckpt-dir /opt/models/ --vae-dir /opt/vae
     volumes:
       - type: bind
         source: ./configs
@@ -12,11 +12,17 @@ services:
         source: ./models/stable_diffusion
         target: /opt/models
       - type: bind
+        source: ./models/vae
+        target: /opt/vae
+      - type: bind
         source: ./models/controlnet
         target: /stable-diffusion-webui/extensions/controlnet/models
       - type: bind
         source: ./models/lora
         target: /stable-diffusion-webui/models/Lora
+      - type: bind
+        source: ./embeddings
+        target: /stable-diffusion-webui/embeddings
     deploy:
       resources:
         reservations:
