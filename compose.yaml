@@ -1,0 +1,23 @@
+services:
+  web:
+    build: .
+    ports:
+      - "7860:7860"
+    command: python3 launch.py --ui-config-file /opt/configs/ui-config.json --ui-settings-file /opt/configs/config.json --styles-file /opt/configs/styles.csv --autolaunch --listen --enable-insecure-extension-access --port 7860 --ckpt /opt/models/flatpiececore_a1400.safetensors --vae-path /opt/models/lastpieceVAE_contrast.safetensors
+    volumes:
+      - type: bind
+        source: ./configs
+        target: /opt/configs
+      - type: bind
+        source: ./models
+        target: /opt/models
+      - type: bind
+        source: ./controlnet_models
+        target: /stable-diffusion-webui/extensions/controlnet/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
