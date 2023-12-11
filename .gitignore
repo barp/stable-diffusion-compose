@@ -1,2 +1,3 @@
 models/
 controlnet_models/
+*.safetensors
