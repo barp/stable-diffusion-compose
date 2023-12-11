@@ -9,13 +9,13 @@ services:
         source: ./configs
         target: /opt/configs
       - type: bind
-        source: ./models
+        source: ./models/stable_diffusion
         target: /opt/models
       - type: bind
-        source: ./controlnet_models
+        source: ./models/controlnet
         target: /stable-diffusion-webui/extensions/controlnet/models
       - type: bind
-        source: ./lora_models
+        source: ./models/lora
         target: /stable-diffusion-webui/models/Lora
     deploy:
       resources:
